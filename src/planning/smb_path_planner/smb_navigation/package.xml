@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>smb_navigation</name>
+  <version>0.0.0</version>
+  <description>The smb_navigation package</description>
+
+  <maintainer email="lbartolomei@ethz.ch">Luca Bartolomei</maintainer>
+  <maintainer email="chencha@ethz.ch">Changan Chen</maintainer>
+  <author email="lbartolomei@ethz.ch">Luca Bartolomei</author>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+  <depend>move_base</depend>
+  <depend>grid_map_costmap_2d</depend>
+  <depend>grid_map_ros</depend>
+  <depend>pcl_ros</depend>
+  <depend>octomap_ros</depend>
+  <depend>map_server</depend>
+  <depend>octomap_server</depend>
+
+  <!-- CMU autonomous exploration development environment -->
+  <depend>loam_interface</depend>
+  <depend>local_planner</depend>
+  <depend>sensor_scan_generation</depend>
+  <depend>terrain_analysis</depend>
+  <depend>terrain_analysis_ext</depend>
+  <depend>visualization_tools</depend>
+  <depend>vehicle_simulator</depend> <!-- needed for the rviz config-->
+  <depend>waypoint_example</depend>
+  <depend>waypoint_rviz_plugin</depend>
+
+  <!-- FAR Planner -->
+  <depend>boundary_handler</depend>
+  <depend>far_planner</depend>
+  <depend>goalpoint_rviz_plugin</depend>
+  <depend>graph_decoder</depend>
+  <depend>teleop_rviz_plugin</depend>
+  
+  <exec_depend>smb_path_following_controller</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <exec_depend>robot_self_filter</exec_depend>
+  <exec_depend>teb_local_planner</exec_depend>
+  <exec_depend>traversability_estimation</exec_depend>
+  <exec_depend>smb_ompl_planner</exec_depend>
+  <exec_depend>smb_navigation_scripts</exec_depend>
+  
+  <export>
+  </export>
+</package>

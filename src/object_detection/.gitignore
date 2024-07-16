@@ -1,0 +1,4 @@
+# some ignores
+*.vscode
+*.bag
+__pycache__/

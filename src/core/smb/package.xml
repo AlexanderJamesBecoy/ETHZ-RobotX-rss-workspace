@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>smb</name>
+  <version>1.0.0</version>
+  <description>SuperMegaBot package for the ETHZ Robotic Summer School</description>
+  <maintainer email="thomas.mantel@mavt.ethz.ch">Thomas Mantel</maintainer>
+  <license>Proprietary</license>
+  <author email="pankertj@ethz.ch">Johannes Pankert</author>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>odometry_conversion</exec_depend>
+  <exec_depend>smb_sensors</exec_depend>
+  <exec_depend>smb_control</exec_depend>
+  <exec_depend>smb_lowlevel_controller</exec_depend>
+  <exec_depend>smb_opc</exec_depend>
+</package>

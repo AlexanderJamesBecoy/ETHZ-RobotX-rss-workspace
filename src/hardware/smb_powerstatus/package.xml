@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>smb_powerstatus</name>
+  <version>1.0.0</version>
+  <description>The packa contain the custom message and launch file for the battery controller of the SuperMegaBot</description>
+
+   <maintainer email="dbaret@student.ethz.ch">Davide Baret</maintainer>
+
+
+  <license>D</license>
+  <license>O</license>
+  <license>O</license>
+  <license>T</license>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>rosserial</exec_depend>
+  <exec_depend>rosserial_arduino</exec_depend>
+</package>

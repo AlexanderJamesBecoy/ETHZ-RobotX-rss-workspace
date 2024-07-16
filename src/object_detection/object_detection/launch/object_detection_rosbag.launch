@@ -1,0 +1,43 @@
+<launch>
+<!-- TODO load the bag yaml file -->
+  <arg name="rosbag_name" default="artefact_detection_test"/>
+  
+  <arg name="rosbag_path" default="/home/shobhit/Downloads/$(arg rosbag_name).bag"/>
+  
+  <arg name="config_file" default="/home/shobhit/Downloads/$(arg rosbag_name).yaml"/>
+  
+  <arg  name="gpu" 
+        default="off"
+        doc="Run on GPU? Options: 'local', 'remote', 'off' (default)"/>
+  
+  <arg  name="input_camera_name"
+        default="/rgb_camera" 
+        doc="Name of the camera, i.e. topic prefix for camera stream and camera info. Relevant for topic subscriptions."/>
+  
+  <arg  name="lidar_topic" 
+        default='/rslidar/points'
+        doc="Topic containing the point cloud from the lidar."/>
+
+  <node name="image_dropper" type="drop" pkg="topic_tools" args="$(arg input_camera_name)/image_raw 19 20 $(arg input_camera_name)/slow/image_raw" />
+  <node name="camera_info_dropper" type="drop" pkg="topic_tools" args="$(arg input_camera_name)/camera_info 19 20 $(arg input_camera_name)/slow/camera_info" />
+
+  <param name ="use_sim_time" value="true"/>
+
+  <include file="$(find object_detection)/launch/object_detection.launch">
+    <arg name="gpu" value="$(arg gpu)" />
+    <arg name="input_camera_name" value="$(arg input_camera_name)" />
+    <arg name="lidar_topic" value="$(arg lidar_topic)" />
+  </include>
+
+  <node name="rviz" pkg="rviz" type="rviz" respawn="false" output="screen" args="-d $(find object_detection)/rviz/object_detection.rviz">
+    <rosparam command="load" file="$(arg config_file)" />
+  </node>
+
+  <node pkg="rosbag" type="play" name="player" output="screen" args="-d 3 --clock $(arg rosbag_path)" required = "false"/>
+</launch>
+
+<!-- HAve it run locally on Jetson -->
+<!-- Clean code and launch folder -->
+<!-- yolo runs from local -->
+<!-- Try to launch jetson stuff from "nuc", look at machine tag -->
+<!-- seperate launch file for local and jetson -->

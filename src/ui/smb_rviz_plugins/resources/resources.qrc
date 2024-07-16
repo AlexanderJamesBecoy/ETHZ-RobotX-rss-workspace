@@ -1,0 +1,18 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>battery/battery_0.svg</file>
+    <file>battery/battery_1.svg</file>
+    <file>battery/battery_2.svg</file>
+    <file>battery/battery_3.svg</file>
+    <file>battery/battery_4.svg</file>
+    <file>battery/battery_5.svg</file>
+    <file>battery/battery_6.svg</file>
+    <file>battery/battery_7.svg</file>
+    <file>battery/battery_8.svg</file>
+    <file>battery/battery_9.svg</file>
+    <file>battery/battery_full.svg</file>
+    <file>battery/battery_charge.svg</file>
+    <file>battery/battery_warning.svg</file>
+    <file>battery/connector.svg</file>
+</qresource>
+</RCC>

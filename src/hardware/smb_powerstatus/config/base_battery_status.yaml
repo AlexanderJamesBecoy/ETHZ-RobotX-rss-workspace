@@ -1,0 +1,3 @@
+mqtt_broker_address: localhost
+mqtt_topic: smb_base_battery/cell_info
+ros_topic: /smb_powerstatus/base

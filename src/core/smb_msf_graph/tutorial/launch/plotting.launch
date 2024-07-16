@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- Arguments -->
+  <arg name="noisify_imu" default="false" />_
+  <arg name="log_dir" default="$(find smb_msf_graph)/tutorial/rss_plots/" />
+
+  <!-- Launch Imu Noisifier -->
+  <group if="$(arg noisify_imu)">
+    <node name="imu_noisifier_node" pkg="smb_msf_graph" type="imu_noisifier.py" output="screen" />
+  </group>
+
+  <!-- Launch Visualizer Node -->
+  <node name="plotting_node" pkg="smb_msf_graph" type="plotting_node.py" output="screen" args="$(arg log_dir)" />
+
+</launch>

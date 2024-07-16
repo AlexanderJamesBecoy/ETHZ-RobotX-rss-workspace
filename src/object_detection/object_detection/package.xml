@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>object_detection</name>
+  <version>0.0.1</version>
+  <description>The object_detection package</description>
+
+  <maintainer email="thomas.mantel@mavt.ethz.ch">Thomas Mantel</maintainer>
+  <license>GPLv3</license>
+  <url type="website">https://github.com/ETHZ-RobotX/smb_object_detection</url>
+
+  <author email="oilter@ethz.ch">oilter</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>ros_numpy</build_depend>
+  <build_depend>object_detection_msgs</build_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>ros_numpy</exec_depend>
+  <exec_depend>object_detection_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>image_undistort</exec_depend>
+  <exec_depend>image_proc</exec_depend>
+  <exec_depend>yolov5</exec_depend>
+</package>

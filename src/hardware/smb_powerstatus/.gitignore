@@ -1,0 +1,5 @@
+.vscode
+
+firmware/build/
+
+firmware/libraries/ros_lib/

@@ -1,0 +1,7 @@
+<launch>
+  <arg name="world_frame" default="map"/>
+  <node pkg="sensor_scan_generation" type="sensorScanGeneration" name="sensorScanGeneration" output="screen" required="true">
+    <param name="world_frame" value="$(arg world_frame)" />
+  </node>
+
+</launch>

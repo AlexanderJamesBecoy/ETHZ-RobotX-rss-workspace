@@ -1,0 +1,13 @@
+#External Prior/Transform Input
+extrinsics:
+  # Published by GMSF
+  worldFrame: "world_graph_msf"
+  odomFrame: "odom_graph_msf"
+  # Used for estimation
+  imuFrame: "imu"
+  baseLinkFrame: "base_link"
+  initializeZeroYawAndPositionOfFrame: "rslidar"
+
+name_ids:
+  fixedFrameAligned: "_graph_msf_aligned"
+  sensorFrameCorrected: "_graph_msf_corrected"

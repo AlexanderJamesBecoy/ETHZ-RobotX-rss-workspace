@@ -1,0 +1,6 @@
+# Reset service 
+bool                      reset
+mpc_target_trajectories   targetTrajectories
+mpc_target_trajectories[]   frameTargetTrajectories
+---
+bool                      done

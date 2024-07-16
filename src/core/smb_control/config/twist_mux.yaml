@@ -1,0 +1,42 @@
+topics:
+- name    : RC
+  topic   : smb_lowlevel_controller/rc_twist
+  timeout : 0.5
+  priority: 15
+- name    : joy
+  topic   : joy_teleop/cmd_vel
+  timeout : 0.5
+  priority: 10
+- name    : keyboard
+  topic   : keyboard_teleop/cmd_vel
+  timeout : 0.5
+  priority: 9
+- name    : joy_opc
+  topic   : opc/cmd_vel
+  timeout : 0.5
+  priority: 8
+- name    : mpc_command_twist
+  topic   : smb_mpc/command_twist
+  timeout : 0.2
+  priority: 5
+- name    : teb_planner_twist
+  topic   : teb_planner_twist
+  timeout : 1.0
+  priority: 3
+- name    : pure_pursuit_twist
+  topic   : pure_pursuit/cmd_vel
+  timeout : 1.0
+  priority: 4
+- name    : path_follower_twist
+  topic   : /nav/cmd_vel_twist
+  timeout : 1.0
+  priority: 6
+locks:
+- name    : e_stop
+  topic   : joy_teleop/e_stop
+  timeout : 0.0
+  priority: 255
+- name    : e_stop_opc
+  topic   : opc/e_stop
+  timeout : 0.0
+  priority: 200

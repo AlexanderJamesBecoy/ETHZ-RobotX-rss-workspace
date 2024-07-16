@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot name="smb" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="simulation"   		default="false"/>
+  <xacro:arg name="gpu" 		 		default="false"/>
+  <xacro:arg name="pointcloud_topic"	default="/rslidar/points"/>
+
+  <xacro:property name="gpu" 		value="$(arg gpu)" />
+
+  <xacro:macro name="LIDAR" params="parent_link simulation">
+
+    <xacro:if value="${simulation}">
+      <xacro:include filename="$(find robosense_description)/urdf/RS-16.urdf.xacro"/>
+
+      <xacro:RS-16 parent="${parent_link}" name="rslidar" topic="$(arg pointcloud_topic)" hz="10" samples="440" gpu="${gpu}" max_range="70.0">
+        <origin xyz="0.0 0.0 ${lidarBoxHeight}" rpy="0 0 0" />
+      </xacro:RS-16>
+
+      <gazebo reference="rslidar_base_mount_joint">
+        <preserveFixedJoint>true</preserveFixedJoint>
+      </gazebo>
+
+      <gazebo reference="rslidar_base_scan_joint">
+        <preserveFixedJoint>true</preserveFixedJoint>
+      </gazebo>
+
+      <!--  simulate icp-->
+      <!--
+      <xacro:include filename="$(find smb_description)/urdf/sensor_plugins/smb_odometry.gazebo.xacro"/>
+      <xacro:odometry_plugin sensor_link="rslidar" topic_name="/rslidar/ground_truth" odom_frame="map" child_odom_frame="lidar" publish_tf="false"/>
+      -->
+    </xacro:if>
+
+    <xacro:unless value="${simulation}">
+      <link name="rslidar">
+          <inertial>
+            <mass value="0.01"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+          </inertial>
+          <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+              <cylinder radius="0.05" length="0.08"/>
+            </geometry>
+            <material name="Cyan">
+              <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+          </visual>
+      </link>
+
+      <joint name="${parent_link}_to_rslidar" type="fixed">
+        <parent link="${parent_link}"/>
+        <child link="rslidar"/>
+        <origin xyz="0.0 0.0 ${lidarBoxHeight+0.039}" rpy="0 0 0"/>
+      </joint>
+    </xacro:unless>
+
+  </xacro:macro>
+
+</robot>

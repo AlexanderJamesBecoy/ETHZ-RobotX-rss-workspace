@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- Arguments -->
+  <arg name="sim"
+       default="false"
+       doc="run on simulation or real robot?"/>
+  
+  <arg name="use_global_map"
+       default="false"
+       doc="whether to use predefined map for global planning"/>
+
+  <arg name="exploration"
+       default="false"
+       doc="whether to use parameters for exploration"/>
+  
+  <arg name="run_traversability"
+       default="false"
+       doc="for turning on traversability estimation (requires extra dependencies, check documentation)"/>
+  
+  <arg name="follow_waypoints"
+       default="false"
+       doc="whether to follow multiple waypoints stored in the input file (also used to save waypoints, see SMB path planner Wiki)"/>
+  
+  <arg name="global_frame"
+       default="world"
+       doc="fixed global frame name in which odometry, map, etc are defined"/>
+  
+  <arg name="map_frame"
+       default="$(arg global_frame)"
+       doc="frame name in which the global costmap is defined"/>
+  
+  <arg name="robot_base_frame"
+       default="base_link"
+       doc="robot's base frame (typically fixed frame attached to the robot)"/>
+  
+  <arg name="odom_topic"
+       default="/base_odom"
+       doc="odometry of the robot is published on this topic"/>
+  
+  <!-- TODO Set right map -->
+  <arg name="global_map"
+       default="$(find smb_navigation)/data/simulation/map.yaml"
+       doc="global map file path"/>
+  
+  <!-- Parameters for follow-waypoint -->
+  <arg name="output_folder"
+       default="$(find smb_navigation_scripts)/saved_path"
+       doc="Output folder of the csv file containing saved waypoints"/>
+  
+  <arg name="input_filename"
+       default="waypoints.csv"
+       doc="Input csv file name containing waypoints to be followed (This has to have csv extension!)"/>
+  
+  <arg name="output_filename"
+       default="waypoints_out.csv" 
+       doc="Output csv file name containing saved waypoints (This has to have csv extension!)"/>
+  
+  <!-- Mapping -->
+  <include file="$(find smb_navigation)/launch/mapping/point_cloud_to_scan.launch"/>
+  
+  <!-- Robot self-filtering and ground removal -->
+  <include file="$(find smb_navigation_scripts)/launch/filter_pointcloud_ground.launch"/>
+  
+  <!-- Utility to publish waypoints to move base -->
+  <include file="$(find smb_navigation_scripts)/launch/follow_waypoints.launch" if="$(arg follow_waypoints)">
+    <arg name="goal_frame_id"    value="$(arg global_frame)"/>
+    <arg name="odom_frame_id"    value="$(arg global_frame)"/>
+    <arg name="base_frame_id"    value="$(arg robot_base_frame)"/>
+    
+    <arg name="output_folder"    value="$(arg output_folder)"/>
+    <arg name="input_filename"   value="$(arg input_filename)"/>
+    <arg name="output_filename"  value="$(arg output_filename)"/>
+  </include>
+  
+  <!-- Path Planning -->
+  <group unless="$(arg run_traversability)"> 
+    <!-- This is the standard move base (without traversability) for the REAL / SIMULATED robot -->
+    
+    <!-- Move base -->
+    <include file="$(find smb_ompl_planner)/launch/move_base_ompl.launch">
+      <arg name="global_frame"      value="$(arg global_frame)"/>
+      <arg name="robot_base_frame"  value="$(arg robot_base_frame)"/>
+      <arg name="odom_topic"        value="$(arg odom_topic)"/>
+      
+      <arg name="sim"               value="$(arg sim)"/>
+      <arg name="use_global_map"    value="$(arg use_global_map)"/>
+      <arg name="exploration"       value="$(arg exploration)"/>
+    </include>
+    
+    <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg global_map)" if="$(arg use_global_map)">
+      <param name="frame_id" value="$(arg map_frame)"/>
+    </node>
+  </group>
+  
+  <group if="$(arg run_traversability)">
+    <!-- This is move base with traversability estimation - you can switch cost layers on and off from dynamic rqt -->
+    <include file="$(find smb_ompl_planner)/launch/move_base_ompl_traversability.launch">
+      <arg name="global_frame"     value="$(arg global_frame)"/>
+      <arg name="robot_base_frame" value="$(arg robot_base_frame)"/>
+      
+      <arg name="sim"              value="$(arg sim)"/>
+    </include>
+
+    <!-- Traversability mapping -->
+    <include file="$(find smb_navigation)/launch/mapping/traversability_mapping.launch"/>
+  </group>
+  
+</launch> 
